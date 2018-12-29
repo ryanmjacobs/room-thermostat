@@ -1,0 +1,19 @@
+{
+  "name": "room-thermostat",
+  "version": "0.0.1",
+  "description": "controls the temperature of my dukelana bedroom",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanmjacobs/room-thermostat.git"
+  },
+  "author": "Ryan Jacobs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryanmjacobs/room-thermostat/issues"
+  },
+  "homepage": "https://github.com/ryanmjacobs/room-thermostat#readme"
+}
