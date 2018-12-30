@@ -28,7 +28,7 @@ const control_loop = async function(prev_state) {
     log(prev_state, new_state, temp);
 
     // start over
-    setTimeout(() => control_loop(new_state), 1000);
+    setTimeout(() => control_loop(new_state), 5000);
 };
 
 function log(prev_state, new_state, temp) {
