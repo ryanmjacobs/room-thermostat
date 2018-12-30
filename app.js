@@ -32,7 +32,7 @@ const control_loop = async function(prev_state) {
 };
 
 function log(prev_state, new_state, temp) {
-    const fname = "thermostate_log.csv";
+    const fname = "thermostat_log.csv";
     const str = `${(new Date()).getTime()/1000},${prev_state},${new_state},${temp}\n`;
 
     if (!fs.existsSync(fname))
