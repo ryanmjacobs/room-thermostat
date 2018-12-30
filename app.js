@@ -20,7 +20,7 @@ const control_loop = async function() {
     console.log(`temp: ${temp} °F`);
 
     // set heater state
-    heater.set({set: temp < 80});
+    heater.set({set: temp < 78.7});
 
     // start over
     setTimeout(control_loop, 1000);
