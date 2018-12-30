@@ -14,11 +14,20 @@ const bme280 = new BME280({i2cBusNo: 1, i2cAddress: 0x76});
 
 // main control loop
 const control_loop = async function() {
+    // read temp
     const data = await bme280.readSensorData();
     const temp = BME280.convertCelciusToFahrenheit(data.temperature_C);
     console.log(`temp: ${temp} °F`);
-    setTimeout(this, 1000);
+
+    // set heater state
+    heater.set({set: temp < 80});
+
+    // start over
+    console.log(control_loop);
+    setTimeout(control_loop, 1000);
 };
 
 // init sensor and begin control loop
-bme280.init().then(() => control_loop());
+bme280.init().then(function() {
+    console.log("online");
+});
