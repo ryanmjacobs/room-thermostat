@@ -28,7 +28,7 @@ const control_loop = async function(prev_state) {
     log(prev_state, new_state, temp);
 
     // start over
-    setTimeout(control_loop(new_state), 1000);
+    setTimeout(() => control_loop(new_state), 1000);
 };
 
 function log(prev_state, new_state, temp) {
@@ -54,7 +54,5 @@ function calc_heater_state(state, temp) {
 // init sensor and begin control loop
 heater.get().then(state => {
     console.log("current heater state: " + state);
-    bme280.init().then(function() {
-        control_loop(state);
-    });
+    bme280.init().then(() => control_loop(state));
 });
