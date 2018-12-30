@@ -1,21 +1,24 @@
 #!/usr/bin/env node
 
+// wifi smart plug
 const TuyAPI = require("tuyapi");
-
-const device = new TuyAPI({
-  id: '012007015ccf7f6ae937', key: '3c01d5c38b319004',
-  ip: '10.0.10.154',
+const heater = new TuyAPI({
+    id: "012007015ccf7f6ae937",
+    key: "3c01d5c38b319004",
+    ip: "10.0.10.154"
 });
 
-device.get().then(status => {
-  console.log('Status:', status);
+// rpi temperature module
+const BME280 = require("bme280-sensor");
+const bme280 = new BME280({i2cBusNo: 1, i2cAddress: 0x76});
 
-  device.set({set: !status}).then(result => {
-    console.log('Result of setting status to ' + !status + ': ' + result);
+// main control loop
+const control_loop = async function() {
+    const data = await bme280.readSensorData();
+    const temp = BME280.convertCelciusToFahrenheit(data.temperature_C);
+    console.log(`temp: ${temp} °F`);
+    setTimeout(this, 1000);
+};
 
-    device.get().then(status => {
-      console.log('New status:', status);
-      return;
-    });
-  });
-});
+// init sensor and begin control loop
+bme280.init().then(() => control_loop());
