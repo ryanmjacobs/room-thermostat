@@ -54,5 +54,7 @@ function calc_heater_state(state, temp) {
 // init sensor and begin control loop
 heater.get().then(state => {
     console.log("current heater state: " + state);
-    bme280.init().then(() => control_loop(state));
+    bme280.init().then(function() {
+        control_loop(state);
+    });
 });
