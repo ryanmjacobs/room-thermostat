@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ryanmjacobs/room-thermostat/issues"
   },
-  "homepage": "https://github.com/ryanmjacobs/room-thermostat#readme"
+  "homepage": "https://github.com/ryanmjacobs/room-thermostat#readme",
+  "dependencies": {
+    "tuyapi": "github:codetheweb/tuyapi"
+  }
 }

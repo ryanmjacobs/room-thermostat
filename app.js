@@ -3,8 +3,8 @@
 const TuyAPI = require("tuyapi");
 
 const device = new TuyAPI({
-  id: '03200329b4e62d002122', key: '79519e10bd62610d',
-  ip: '192.168.0.14',
+  id: '012007015ccf7f6ae937', key: '3c01d5c38b319004',
+  ip: '10.0.10.154',
 });
 
 device.get().then(status => {
