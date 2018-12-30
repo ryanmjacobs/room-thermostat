@@ -24,7 +24,7 @@ const control_loop = async function(prev_state) {
 
     // set heater state
     const new_state = calc_heater_state(prev_state, temp);
-    heater.set({set: new_state)});
+    heater.set({set: new_state});
     log(prev_state, new_state, temp);
 
     // start over
