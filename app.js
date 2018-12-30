@@ -23,11 +23,8 @@ const control_loop = async function() {
     heater.set({set: temp < 80});
 
     // start over
-    console.log(control_loop);
     setTimeout(control_loop, 1000);
 };
 
 // init sensor and begin control loop
-bme280.init().then(function() {
-    console.log("online");
-});
+bme280.init().then(control_loop);
