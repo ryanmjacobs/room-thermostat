@@ -33,10 +33,10 @@ const control_loop = async function(prev_state) {
 
 function log(prev_state, new_state, temp) {
     const fname = "thermostate_log.csv";
-    const str = `${(new Date()).getTime()/1000},${prev_state},${new_state},${temp}`;
+    const str = `${(new Date()).getTime()/1000},${prev_state},${new_state},${temp}\n`;
 
     if (!fs.existsSync(fname))
-        fs.appendFileSync(fname, "epoch,prev_state,next_state,temp");
+        fs.appendFileSync(fname, "epoch,prev_state,next_state,temp\n");
 
     fs.appendFileSync(fname, str);
 }
