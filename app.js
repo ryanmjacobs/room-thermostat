@@ -24,7 +24,7 @@ const control_loop = async function(prev_state) {
 
     // set heater state
     const new_state = calc_heater_state(prev_state, temp);
-    heater.set({set: new_state});
+    await heater.set({set: new_state});
     log(prev_state, new_state, temp);
 
     // start over
@@ -36,9 +36,9 @@ function log(prev_state, new_state, temp) {
     const str = `${(new Date()).getTime()/1000},${prev_state},${new_state},${temp}`;
 
     if (!fs.existsSync(fname))
-        fs.appendFile(fname, "epoch,prev_state,next_state,temp");
+        fs.appendFileSync(fname, "epoch,prev_state,next_state,temp");
 
-    fs.appendFile(fname, str);
+    fs.appendFileSync(fname, str);
 }
 
 function calc_heater_state(state, temp) {
@@ -54,8 +54,5 @@ function calc_heater_state(state, temp) {
 // init sensor and begin control loop
 heater.get().then(state => {
     console.log("current heater state: " + state);
-    bme280.init().then(() => {
-        console.log(state);
-        control_loop(state);
-    });
+    bme280.init().then(() => control_loop(state));
 });
