@@ -36,7 +36,7 @@ function log(prev_state, new_state, temp) {
     const str = `${(new Date()).getTime()/1000},${prev_state},${new_state},${temp}\n`;
 
     if (!fs.existsSync(fname))
-        fs.appendFileSync(fname, "epoch,prev_state,next_state,temp\n");
+        fs.appendFileSync(fname, "epoch,prev_state,new_state,temp\n");
 
     fs.appendFileSync(fname, str);
 }
@@ -49,6 +49,8 @@ function calc_heater_state(state, temp) {
     // turn off heater if temp has overshot SET_POINT by 1 degree
     if (state && temp > (SET_POINT+1))
         return false;
+
+    return state;
 }
 
 // init sensor and begin control loop
