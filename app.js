@@ -17,6 +17,8 @@ const bme280 = new BME280({i2cBusNo: 1, i2cAddress: 0x76});
 
 // main control loop
 const control_loop = async function(prev_state) {
+    let new_state = false;
+
     try {
         // read temp
         const data = await bme280.readSensorData();
@@ -24,7 +26,7 @@ const control_loop = async function(prev_state) {
         console.log(`temp: ${temp} °F`);
 
         // set heater state
-        const new_state = calc_heater_state(prev_state, temp);
+        new_state = calc_heater_state(prev_state, temp);
         await heater.set({set: new_state});
         log(prev_state, new_state, temp);
     } catch (err) {
