@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const SET_POINT = 75;
+const SET_POINT = 72;
 
 // wifi smart plug
 const TuyAPI = require("tuyapi");
@@ -41,10 +41,10 @@ function log(prev_state, new_state, temp) {
     const fname = "thermostat_log.csv";
 
     const b = v => v ? 1 : 0;
-    const str = `${(new Date()).toISOString()},${b(prev_state)},${b(new_state)},${temp}\n`;
+    const str = `${(new Date()).toISOString()},${b(prev_state)},${b(new_state)},${temp},${SET_POINT}\n`;
 
     if (!fs.existsSync(fname))
-        fs.appendFileSync(fname, "timestamp,prev_state,new_state,temp\n");
+        fs.appendFileSync(fname, "timestamp,prev_state,new_state,temp,set_point\n");
 
     fs.appendFileSync(fname, str);
 }
