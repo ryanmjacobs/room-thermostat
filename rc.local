@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # wait until i2c is online
-while [ ! -f /dev/i2c-1 ]; do
+while [ ! -e /dev/i2c-1 ]; do
     sleep 1
 done
 
