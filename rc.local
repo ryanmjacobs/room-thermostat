@@ -1,4 +1,9 @@
 #!/bin/bash
 
+# wait until i2c is online
+while [ ! -f /dev/i2c-1 ]; do
+    sleep 1
+done
+
 chmod 666 /dev/i2c*
 runuser -l ryan -c /home/ryan/room-thermostat/launch_tmux.sh
