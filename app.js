@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const SET_POINT = 78;
+const SET_POINT = 81;
 
 // wifi smart plug
 const TuyAPI = require("tuyapi");
@@ -58,12 +58,12 @@ function log(prev_state, new_state, temp, err) {
 }
 
 function calc_heater_state(state, temp) {
-    // turn on heater if temp drops 2 degrees below SET_POINT
-    if (!state && temp < (SET_POINT-1))
+    // turn on heater if temp drops 0.5 degrees below SET_POINT
+    if (!state && temp < (SET_POINT-0.5))
         return true;
 
-    // turn off heater if temp has overshot SET_POINT by 1 degree
-    if (state && temp > (SET_POINT+0.5))
+    // turn off heater if temp has exceeded SET_POINT
+    if (state && temp > (SET_POINT))
         return false;
 
     return state;
