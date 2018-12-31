@@ -41,10 +41,10 @@ function log(prev_state, new_state, temp) {
     const fname = "thermostat_log.csv";
 
     const b = v => v ? 1 : 0;
-    const str = `${(new Date()).getTime()/1000},${b(prev_state)},${b(new_state)},${temp}\n`;
+    const str = `${(new Date()).toISOString()},${b(prev_state)},${b(new_state)},${temp}\n`;
 
     if (!fs.existsSync(fname))
-        fs.appendFileSync(fname, "epoch,prev_state,new_state,temp\n");
+        fs.appendFileSync(fname, "timestamp,prev_state,new_state,temp\n");
 
     fs.appendFileSync(fname, str);
 }
