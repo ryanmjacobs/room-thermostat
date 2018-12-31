@@ -48,7 +48,7 @@ function log(prev_state, new_state, temp, err) {
         return -1;
     }
 
-    const error = err ? err : "none";
+    const error = err ? JSON.stringify(err) : "none";
     const str = `${(new Date()).toISOString()},${b(prev_state)},${b(new_state)},${temp},${SET_POINT},${error}\n`;
 
     if (!fs.existsSync(fname))
