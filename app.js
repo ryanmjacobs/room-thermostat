@@ -23,7 +23,7 @@ const control_loop = async function(prev_state) {
         // read temp
         const data = await bme280.readSensorData();
         const temp = BME280.convertCelciusToFahrenheit(data.temperature_C);
-        console.log(`temp: ${temp} °F`);
+        console.log(`temp: ${temp.toFixed(2)} °F`);
 
         // set heater state
         new_state = calc_heater_state(prev_state, temp);
