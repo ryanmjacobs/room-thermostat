@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const SET_POINT = 72;
+const SET_POINT = 78;
 
 // wifi smart plug
 const TuyAPI = require("tuyapi");
@@ -17,12 +17,13 @@ const bme280 = new BME280({i2cBusNo: 1, i2cAddress: 0x76});
 
 // main control loop
 const control_loop = async function(prev_state) {
-    let new_state = false;
+    let new_state = undefined;
+    let temp = -1;
 
     try {
         // read temp
         const data = await bme280.readSensorData();
-        const temp = BME280.convertCelciusToFahrenheit(data.temperature_C);
+        temp = BME280.convertCelciusToFahrenheit(data.temperature_C);
         console.log(`temp: ${temp.toFixed(2)} °F`);
 
         // set heater state
@@ -31,20 +32,27 @@ const control_loop = async function(prev_state) {
         log(prev_state, new_state, temp);
     } catch (err) {
         console.log(err);
+        log(prev_state, new_state, temp, err);
     }
 
     // start over
     setTimeout(() => control_loop(new_state), 5000);
 };
 
-function log(prev_state, new_state, temp) {
+function log(prev_state, new_state, temp, err) {
     const fname = "thermostat_log.csv";
 
-    const b = v => v ? 1 : 0;
-    const str = `${(new Date()).toISOString()},${b(prev_state)},${b(new_state)},${temp},${SET_POINT}\n`;
+    function b(v) {
+        if (v === true) return 1;
+        if (v === false) return 0;
+        return -1;
+    }
+
+    const error = err ? err : "none";
+    const str = `${(new Date()).toISOString()},${b(prev_state)},${b(new_state)},${temp},${SET_POINT},${error}\n`;
 
     if (!fs.existsSync(fname))
-        fs.appendFileSync(fname, "timestamp,prev_state,new_state,temp,set_point\n");
+        fs.appendFileSync(fname, "timestamp,prev_state,new_state,temp,set_point,error\n");
 
     fs.appendFileSync(fname, str);
 }
