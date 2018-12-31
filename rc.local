@@ -1,0 +1,4 @@
+#!/bin/bash
+
+chmod 666 /dev/i2c*
+runuser -l ryan -c /home/ryan/room-thermostat/launch_tmux.sh
