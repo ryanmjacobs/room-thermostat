@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const SET_POINT = 81;
+const SET_POINT = 75;
 
 // wifi smart plug
 const TuyAPI = require("tuyapi");
