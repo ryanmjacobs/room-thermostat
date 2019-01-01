@@ -4,7 +4,7 @@
 while [ ! -e /dev/i2c-1 ]; do
     sleep 1
 done
-sleep 1
+sleep 5
 
 chmod 666 /dev/i2c*
 runuser -l ryan -c /home/ryan/room-thermostat/launch_tmux.sh
