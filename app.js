@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const SET_POINT = 81;
 
 // wifi smart plug
 const TuyAPI = require("tuyapi");
@@ -15,6 +14,15 @@ const heater = new TuyAPI({
 const BME280 = require("bme280-sensor");
 const bme280 = new BME280({i2cBusNo: 1, i2cAddress: 0x76});
 
+// controller
+const SET_POINT = 75;
+const Controller = require("node-pid-controller");
+const ctr = new Controller({
+    k_p: 0.55,
+    k_i: 465,
+    k_d: 93
+});
+
 // main control loop
 const control_loop = async function(prev_state) {
     let new_state = undefined;
@@ -26,8 +34,14 @@ const control_loop = async function(prev_state) {
         temp = BME280.convertCelciusToFahrenheit(data.temperature_C);
         console.log(`temp: ${temp.toFixed(2)} °F`);
 
+        // calculate new state
+        ctr.setTarget(SET_POINT);
+        const correction = ctr.update(temp);
+        console.log(correction);
+        new_state = correction > 0 ? true : false;
+
         // set heater state
-        new_state = calc_heater_state(prev_state, temp);
+      //new_state = calc_heater_state(prev_state, temp);
         await heater.set({set: new_state});
         log(prev_state, new_state, temp);
     } catch (err) {
@@ -36,7 +50,7 @@ const control_loop = async function(prev_state) {
     }
 
     // start over
-    setTimeout(() => control_loop(new_state), 5000);
+    setTimeout(() => control_loop(new_state), 2500);
 };
 
 function log(prev_state, new_state, temp, err) {
@@ -58,12 +72,12 @@ function log(prev_state, new_state, temp, err) {
 }
 
 function calc_heater_state(state, temp) {
-    // turn on heater if temp drops 0.5 degrees below SET_POINT
-    if (!state && temp < (SET_POINT-0.5))
+    // turn on heater
+    if (!state && temp < (SET_POINT-0.01))
         return true;
 
-    // turn off heater if temp has exceeded SET_POINT
-    if (state && temp > (SET_POINT))
+    // turn off heater
+    if (state && temp > (SET_POINT+0.01))
         return false;
 
     return state;
