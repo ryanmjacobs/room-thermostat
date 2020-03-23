@@ -19,4 +19,4 @@ const control_loop = async function() {
     setTimeout(() => control_loop(), 5000);
 };
 
-bme280.init().then(() => control_loop());
+bme280.init().then(() => control_loop()).catch(e=>console.log(e));
