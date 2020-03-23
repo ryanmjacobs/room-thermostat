@@ -5,7 +5,7 @@ const BME280 = require("bme280-sensor");
 const bme280 = new BME280({i2cBusNo: 1, i2cAddress: 0x76});
 
 // main control loop
-const control_loop = async function(prev_state) {
+const control_loop = async function() {
     try {
         // read temp
         const data = await bme280.readSensorData();
@@ -16,5 +16,7 @@ const control_loop = async function(prev_state) {
     }
 
     // start over
-    setTimeout(() => control_loop(new_state), 5000);
+    setTimeout(() => control_loop(), 5000);
 };
+
+bme280.init().then(() => control_loop());

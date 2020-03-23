@@ -1,0 +1,9 @@
+# See /boot/overlays/README for all available options
+
+device_tree=bcm2708-rpi-b.dtb
+device_tree_param=i2c1=on
+device_tree_param=spi=on
+dtparam=i2c_baudrate=10000
+
+gpu_mem=64
+initramfs initramfs-linux.img followkernel
