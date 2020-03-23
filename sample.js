@@ -13,7 +13,7 @@ async function insert_pg(bme_temp, cpu_temp) {
   const client = new Client();
   await client.connect();
 
-  const query = "INSERT INTO acpi_log (source, temperature_celsius) VALUES ($1, $2)";
+  const query = "INSERT INTO dukelana_temperature_humidity_pressure (source, temperature_celsius) VALUES ($1, $2)";
   await client.query(query, ["porch-rpi-bme280", bme_temp]);
   await client.query(query, ["porch-rpi-cpu", cpu_temp]);
 
