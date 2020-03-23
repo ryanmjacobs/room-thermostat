@@ -27,9 +27,9 @@ const control_loop = async function(prev_state) {
         console.log(`temp: ${temp.toFixed(2)} °F`);
 
         // set heater state
-        new_state = calc_heater_state(prev_state, temp);
-        await heater.set({set: new_state});
-        log(prev_state, new_state, temp);
+      //new_state = calc_heater_state(prev_state, temp);
+      //await heater.set({set: new_state});
+      //log(prev_state, new_state, temp);
     } catch (err) {
         console.log(err);
         log(prev_state, new_state, temp, err);
