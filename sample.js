@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
+const {exec} = require("child_process");
 
 // rpi temperature module
 const BME280 = require("bme280-sensor");
@@ -21,8 +22,8 @@ async function insert_pg(bme_temp, cpu_temp) {
 }
 
 function read_cpu_temp() {
-	const text = fs.readFileSync("/sys/class/thermal/thermal_zone0/temp");
-	return parseInt(text) / 1000;
+    const text = fs.readFileSync("/sys/class/thermal/thermal_zone0/temp");
+    return parseInt(text) / 1000;
 }
 
 // main control loop
@@ -31,10 +32,14 @@ const control_loop = async function() {
         // read temp
         const data = await bme280.readSensorData();
         const bme_temp = data.temperature_C;
-	const cpu_temp = read_cpu_temp();
+        const cpu_temp = read_cpu_temp();
+
+        // i2c sensor error -> reboot?
+        if (bme_temp == 25.36) {
+        }
 
         console.log(`bme_temp: ${bme_temp.toFixed(2)}, cpu_temp: ${cpu_temp.toFixed(2)}`);
-	insert_pg(bme_temp, cpu_temp);
+        insert_pg(bme_temp, cpu_temp);
     } catch (err) {
         console.log(err);
     }
