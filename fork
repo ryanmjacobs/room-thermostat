@@ -1,0 +1,3 @@
+docker kill discovery
+docker rm discovery
+docker run --restart=always --name discovery -d --net=host discovery:0.0.1-1
