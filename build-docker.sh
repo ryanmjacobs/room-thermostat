@@ -1,5 +1,4 @@
 #!/bin/bash
 
-version=0.0.1
-rev=1
-docker build -t discovery:$version-$rev .
+version=0.0.2
+docker build -t discovery:$version .
