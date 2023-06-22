@@ -18,7 +18,7 @@
   "homepage": "https://github.com/ryanmjacobs/room-thermostat#readme",
   "dependencies": {
     "bme280-sensor": "^0.1.7",
-    "pg": "^7.18.2",
+    "pg": "^8.11.0",
     "tuyapi": "github:codetheweb/tuyapi"
   }
 }
